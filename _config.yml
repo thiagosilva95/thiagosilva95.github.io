@@ -27,7 +27,6 @@ navigation: # Navigation links
 
 tagline: >
   Modern Jekyll theme focused on speed performance &amp; SEO best practices
-
 hero_img: posts/sleek_lg.jpg # Main background image: use the path from /assets/img/ => This will output /assets/img/posts/sleek_lg.jpg
 
 email: your-email@domain.com # email for form submission
@@ -46,7 +45,7 @@ service_worker: true
 # BUILD SETTINGS
 markdown: kramdown
 highlighter: rouge # or pygments or null
-# theme: jekyll-sleek # Uncomment if you're using the theme as a ruby gem
+ theme: jekyll-sleek 
 exclude:
   - README.md
   - node_modules
