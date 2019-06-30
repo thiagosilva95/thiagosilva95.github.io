@@ -45,7 +45,7 @@ service_worker: true
 # BUILD SETTINGS
 markdown: kramdown
 highlighter: rouge # or pygments or null
- theme: jekyll-sleek 
+theme: jekyll-sleek 
 exclude:
   - README.md
   - node_modules
