@@ -1,6 +1,9 @@
 .container {
   padding: 0 20px;
-  @include container(0);
+
+  @include breakpoint($xs) {
+    @include container(auto);
+  }
 
   @include breakpoint($sm) {
     @include container(540px);
