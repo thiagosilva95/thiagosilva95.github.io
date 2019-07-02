@@ -8,7 +8,7 @@ permalink: /about/
 
 ![profile]({{ "assets/img/thiagosilva95-profile-50p.jpg" | absolute_url }})
  
-Hi! My name is **Thiago Henrique Nascimento da Silva**, and I'm a Data Scientist from Brazil. I'm passionate about machine learning, and the power it gives us to solve real problems in business and science. I graduated in Electrical Engineering from the University of Campinas and had the fortune of discovering ML in my early undergraduate years, totally by chance, during an internship at NICTA, in Syndey, Australia. Since then, I’ve literally fallen in love with the discipline, and built many successful advanced analytics initiatives in the media, mining, insurance, retail, consumer goods and banking industries.
+Hi! My name is **Thiago Henrique Nascimento da Silva**, and I'm a Software Developer from Brazil. I'm passionate about machine learning, and the power it gives us to solve real problems in business and science. I graduated in Electrical Engineering from the University of Campinas and had the fortune of discovering ML in my early undergraduate years, totally by chance, during an internship at NICTA, in Syndey, Australia. Since then, I’ve literally fallen in love with the discipline, and built many successful advanced analytics initiatives in the media, mining, insurance, retail, consumer goods and banking industries.
 
 I hold a special interest about some specific topics:
 
