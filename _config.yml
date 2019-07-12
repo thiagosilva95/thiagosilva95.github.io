@@ -21,7 +21,7 @@ navigation: # Navigation links
   - {name: 'Contact', link: '/contact'}
 
 tagline: >
-  My thoughts and experiments on machine learning and related stuff
+  Compartilhando meus conhecimentos sobre Desenvolvimento de Software e Data Science
 
 hero_img: posts/sydney4.jpg # Main background image: use the path from /assets/img/ => This will output /assets/img/posts/sleek_lg.jpg
 
