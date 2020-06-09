@@ -25,6 +25,34 @@ In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions
 
 ![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
 
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
+
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
+
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/05.png" | absolute_url }})
+
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
+
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/07.png" | absolute_url }})
+
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/08.png" | absolute_url }})
+
+In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+
+![]({{ "assets/img/clean_architecture/final.png" | absolute_url }})
+
 Atensiosamente, 
 Thiago
 
