@@ -47,27 +47,41 @@ As I wanted to use a very expressive model (`xgboost`) and tune the hell out of 
 
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
+API rota de cadastro
+
+Utiliza o Express, MongoDB, BCrypt e Validator para validar o e-mail recebido
+
+Geralmente como as pessoas fazem.
+
 ![]({{ "assets/img/clean_architecture/00.png" | absolute_url }})
 
 ![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
 
+Controller aclopado a biblioteca de terceiro. Componente que faz tudo no sistema. Se precisar em algum momento trocar o express por outro framework, será necessário alterar todos os controllers
+
+Começando com o desacoplamento do controle e express. Deveria ser uma tarefa muito fácil. Práticamente toma conta do sistema.
+Hoje o controller aponta para o express. Precisamos usar o padrão de inversão de dependências (dependency inversion) O Express deve estar olhando para o controller
+
+
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
 ![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
 
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
-
-![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
+Podemos criar um adapter entre os dois. O express esperar receber o (req, res) como parametros. Terá a tarefa de converter as interfaces do controller para a realidade do express.
 
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
 ![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
 
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Também não podemos permitir que o adapter dependa diretamente do SignUpController. Pode adaptar qualquer controlador por isso criamos uma interface Controller, que irá servir como um limite da camada de apresentação para fazer a inversão de dependencia
+O adapter precisa de qualquer classe que utilize a interface
+Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
 
 ![]({{ "assets/img/clean_architecture/05.png" | absolute_url }})
 
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Desacoplar biblioteca para validar e-mail e com isso nosso presentation layer depende de um componente externo. Criamos um emailvalidatorAdapter semelhante ao item anterior.
+Em vez de o signupcontroller depender diretamente desse adapter, definimos ainda na camada de apresentação uma nova interface emailvalidator que 
+diz qual o formato que quer e alguem de fora implementa a interface definida. Dessa forma desaclopamos
 
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
