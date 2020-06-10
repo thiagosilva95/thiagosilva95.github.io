@@ -4,10 +4,19 @@ title: Clean Architecture
 featured-img: clean_architecture
 category: [architecture]
 mathjax: true
-summary: Entrando no mundo da produção de conteúdo! Espero que esse início me leve para uma jornada cheia de descobertas.
+summary: Vamos falar um pouco sobre essa "nova" forma de estruturar seus projetos, suas vantagens e desvantagens, e um exemplo prático de sua utilização 
 ---
 
 # Clean Architecture: o que é, vantagens e como utilizar em aplicações na prática
+
+Ultimamente vemos ouvindo falar bastante sobre termos como "Clean Architecture", "Hexagonal Architecture", "SOLID", "DRY", "DDD", etc. Todos eles são princípios, práticas ou abordagens no mundo de desenvolvimento de software que, em essência, convergem para o objetivo de tornar o software mais robusto, escalável e flexível, deixando-o tolerante a mudanças, facilitando a implementação de novos requisitos para a evolução e manutenção do sistema.
+
+Quando se fala em Clean archi temos:
+
+- Arquitetura FOCADA nas regras de negócio: suas regras não devem conhecer o "mundo lá fora" (Frameworks, Ferramentas, Tecnologias, etc).
+- Inversão de dependências: Por exemplo, seu banco de dados deve depender das suas regras, e não suas regras do seu banco. Sua UI? Mesma coisa!
+- A melhor decisão é a que você pode tomar depois?: Isso não é preguiça, é arquitetura incremental. 
+- Regras de negócio devem ser 100% TESTÁVEIS e INDEPENDENTES!
 
 ## Princípios da arquitetura limpa
 
@@ -39,6 +48,8 @@ As I wanted to use a very expressive model (`xgboost`) and tune the hell out of 
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
 ![]({{ "assets/img/clean_architecture/00.png" | absolute_url }})
+
+![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
 
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
