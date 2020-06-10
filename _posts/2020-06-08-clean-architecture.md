@@ -1,15 +1,15 @@
 ---
 layout: post
-title: Um pouco sobre Clean Architecture
+title: Clean Architecture
 featured-img: clean_architecture
 category: [architecture]
 mathjax: true
 summary: Entrando no mundo da produção de conteúdo! Espero que esse início me leve para uma jornada cheia de descobertas.
 ---
 
-# Conceitos da arquitetura limpa
+# Clean Architecture: o que é, vantagens e como utilizar em aplicações na prática
 
-## Problem: The Bernoulli Bandit
+## Princípios da arquitetura limpa
 
 ### A Regra de Dependência: Software Dependente ?
 
