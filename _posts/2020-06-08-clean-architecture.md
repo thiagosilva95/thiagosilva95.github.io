@@ -73,7 +73,7 @@ In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions
 
 ![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
 
-Também não podemos permitir que o adapter dependa diretamente do SignUpController. Pode adaptar qualquer controlador por isso criamos uma interface Controller, que irá servir como um limite da camada de apresentação para fazer a inversão de dependencia
+Também não podemos permitir que o adapter dependa diretamente do (`SignUpController`). Pode adaptar qualquer controlador por isso criamos uma interface Controller, que irá servir como um limite da camada de apresentação para fazer a inversão de dependencia
 O adapter precisa de qualquer classe que utilize a interface
 Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
 
@@ -81,19 +81,36 @@ Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
 
 Desacoplar biblioteca para validar e-mail e com isso nosso presentation layer depende de um componente externo. Criamos um emailvalidatorAdapter semelhante ao item anterior.
 Em vez de o signupcontroller depender diretamente desse adapter, definimos ainda na camada de apresentação uma nova interface emailvalidator que 
-diz qual o formato que quer e alguem de fora implementa a interface definida. Dessa forma desaclopamos
+diz qual o formato que quer e alguem de fora implementa a interface definida. Dessa forma desaclopamos. Se outros controladores precisarem usar esse validator poderemos reutilizar. Se um dia optarmos por substituir essa biblioteca por uma regex por exemplo, alteraremos apenas um componente.
+Podemos dizer que é nossa camada utils. mais generica. coisas que podem ser utilizadas em qualquer lugar.
 
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Então precisamos salvar os dados no banco de dados. Mas antes disso, queremos criptografar a senha. Precisamos de uma camada de negócio que diga o que precisamos fazer. 
+Criamos uma inteface. Não fica na camada presentation. Nada mais é que a representação de uma camada de negócio da aplicação. Camada domain. Não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
+Sigupcontroller precisa de alguem que implemente essa interface para criar uma conta. Não importa se a implementação será com banco de dados ou cache, ou dados mockados portanto que respeite a interface.
+
+Então teremos o data layer que será onde teremos a implementação da regra de negocio. Temos o componente dbaddacccount que será nossa implementação voltada para banco de dados.
+Esse sim utiliza o Bcrypt para fazer a criptografia. Mas não queremos acopla-los diretamente. Assim como antes, criamos um adapter para isolár os componentes.
+Dentro da infra layer, camada de infra, terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependencia. Criamos a interface Encrypter. O dbaddacccount precisa de alguém que saiba fazer criptografia e não como fazer.
+Dependencia inverteu novamente. o infra que aponta para o data layer e não o data layer apontando para o infra.
+
 
 ![]({{ "assets/img/clean_architecture/07.png" | absolute_url }})
 
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Para finalizar temos o mongodb. AddUserMongoRepository que sabe usar o mongo. Criamos a interface AddUserRepo,mais alguem que precisa de alguem que saiba inserir no banco de dados, não importa qual
+inversão de dependencia feita mais uma vez.
+
+Com isso as bibliotecas de  terceiros estão cada vez mais isolados, mais fora, na camada mais "fora" da nossa arquitetura. Trocar mongo db meche em apenas um componente
 
 ![]({{ "assets/img/clean_architecture/08.png" | absolute_url }})
 
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Com isso, utilização do padrão adapter.  para conseguir desacoplar nossas camadas precisamos acoplar uma delas que será Main layer. Será responsável por criar instancias de todos os objetos.
+Exemplo: Para criar a rota de signup precisamos do controlador, que por sua vez precisa de alguem que implemente o AddAccout que não será instanciada no controller.
+Alguem cria a instancia e injeta no controller. O main fará a composição desses objetos, outro design pattern Composite. Toda composição feita em um lugar só.
+
+Abaixo o desenho final desse exemplo. 
+Destacando com cores para melhor vizualização. Dependencias sempre nas "pontas". Facilmente podemos trocar sem afetar o resto do sistema.
 
 ![]({{ "assets/img/clean_architecture/final.png" | absolute_url }})
 
