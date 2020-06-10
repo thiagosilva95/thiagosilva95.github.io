@@ -32,14 +32,13 @@ Esta camada tem uma função bem específica como todas as outras. Função esta
 
 Composta pelos elementos mais externos: Frameworks, Banco de dados, bibliotecas e derivações.
 
-
-![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
+## Aplicação prática
 
 As I wanted to use a very expressive model (`xgboost`) and tune the hell out of it (with the TPE algorithm from `hyperopt`), I needed to devise a robust validation process. One of Kaggle greatest competitors, [Lucas Eustaquio](https://www.kaggle.com/leustagos) (who, unfortunately, lost the battle against cancer during the competition), mentioned at an interview that validation is one of the things [he cared the most about](http://blog.kaggle.com/2016/02/22/profiling-top-kagglers-leustagos-current-7-highest-1/), being the first thing that he builds at the start of a competition.
 
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
-![]({{ "assets/img/clean_architecture/02.png" | absolute_url }})
+![]({{ "assets/img/clean_architecture/00.png" | absolute_url }})
 
 In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
 
