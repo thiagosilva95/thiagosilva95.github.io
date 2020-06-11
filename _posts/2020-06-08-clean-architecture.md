@@ -53,9 +53,7 @@ Utiliza o Express, MongoDB, BCrypt e Validator para validar o e-mail recebido
 
 Geralmente como as pessoas fazem.
 
-![]({{ "assets/img/clean_architecture/00.png" | absolute_url }})
-
-![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
+![]({{ "assets/img/clean_architecture/00.png" | absolute_url }}) ![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
 
 Controller aclopado a biblioteca de terceiro. Componente que faz tudo no sistema. Se precisar em algum momento trocar o express por outro framework, será necessário alterar todos os controllers
 
