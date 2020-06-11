@@ -21,7 +21,7 @@ navigation: # Navigation links
   - {name: 'Contact', link: '/contact'}
 
 tagline: >
-  Compartilhando meus conhecimentos sobre Engenharia de Software
+  Compartilhando meus conhecimentos sobre desenvolvimento de software
 
 hero_img: posts/programmer-wallpaper.jpg # Main background image: use the path from /assets/img/ => This will output /assets/img/posts/sleek_lg.jpg
 
