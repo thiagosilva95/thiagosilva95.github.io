@@ -14,4 +14,6 @@ Eu me considero como full-stack web developer. Ao longo da minha carreira, tive 
 
 Para mim, desenvolveder software é mais do que um trabalho regular e dedico uma grande parte do meu tempo a ele. Tendo em mente o quão dinâmico é o mundo do desenvolvimento web, tento estar sempre acompanhando as tendências e manter a mente aberta, ao mesmo tempo em que solidifico meu conhecimento fundamental.
 
-Possuo graduação em Sistemas de Informação pela Uninassau (PE) e possuo mais de 6+ anos de experiência em análise e desenvolvimento de sistemas.
+Trabalho atualmente como Especialista em Desenvilvimento de Sistemas na Cielo, empresa brasileira de tecnologia e serviços para o varejo, líder no segmento de pagamentos eletrônicos na América Latina. Usando o modelo ágil de Squad, atuo na evolução do sistema de Credenciamento, que é porta de entrada para os clientes na empresa.
+
+Para saber mais, acesse meu [LinkedIn] (https://www.linkedin.com/in/thiagohsilvadev)
