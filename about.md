@@ -16,4 +16,4 @@ Para mim, desenvolveder software é mais do que um trabalho regular e dedico uma
 
 Trabalho atualmente como Especialista em Desenvilvimento de Sistemas na Cielo, empresa brasileira de tecnologia e serviços para o varejo, líder no segmento de pagamentos eletrônicos na América Latina. Usando o modelo ágil de Squad, atuo na evolução do sistema de Credenciamento, que é porta de entrada para os clientes na empresa.
 
-Para saber mais, acesse meu [LinkedIn] (https://www.linkedin.com/in/thiagohsilvadev)
+Para saber mais, acesse meu [LinkedIn](https://www.linkedin.com/in/thiagohsilvadev).
