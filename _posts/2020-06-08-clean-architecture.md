@@ -63,11 +63,11 @@ Hoje o `SignUpController` aponta para o Express por isso precisamos usar o padr�
 
 ![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
 
-Para isso, podemos criar um adapter entre os dois que terá a tarefa de converter as interfaces do controller para a realidade do express. Uma das particularidades do express é que ele espera receber o (req, res) como parametros nas rotas definidas. 
+Para isso, podemos criar um adapter entre os dois que terá a tarefa de converter as interfaces do controller para a realidade do Express. Uma das particularidades do express é que ele espera receber o (req, res) como parametros nas rotas definidas. 
 
 ![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
 
-Também não podemos permitir que o adapter dependa diretamente do (`SignUpController`). Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma interface `Controller`, que irá servir como um limite da camada de apresentação para fazer a inversão de dependência
+Também não podemos permitir que o adapter dependa diretamente do `SignUpController`. Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma interface `Controller`, que irá servir como um limite da camada de apresentação para fazer a inversão de dependência
 O adapter precisa de qualquer classe que utilize a interface
 Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
 
@@ -79,8 +79,8 @@ Podemos dizer que é nossa camada Utils que é mais generica irá conter coisas 
 
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
-Então precisamos salvar os dados no banco de dados. Mas antes disso, queremos criptografar a senha. Precisamos de uma camada de negócio que diga o que precisamos fazer. 
-Criamos uma inteface. Não fica na camada presentation. Nada mais é que a representação de uma camada de negócio da aplicação. Camada domain. Não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
+Surge, então, a necessidade de uma camada de negócio que diga o que precisamos fazer. Pois para realizar um cadastro, precisamos salvar os dados no banco de dados, mas antes disso, queremos criptografar a senha do usuário.
+Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada *Domain*. Não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
 Sigupcontroller precisa de alguem que implemente essa interface para criar uma conta. Não importa se a implementação será com banco de dados ou cache, ou dados mockados portanto que respeite a interface.
 
 Então teremos o data layer que será onde teremos a implementação da regra de negocio. Temos o componente dbaddacccount que será nossa implementação voltada para banco de dados.
