@@ -107,7 +107,7 @@ Abaixo está o desenho final desse exemplo, destacando com cores para melhor vis
 
 ![]({{ "assets/img/clean_architecture/final.png" | absolute_url }})
 
-### Considerações Finais
+## Considerações Finais
 As ideias propostas por Uncle Bob, padronizam o desenvolvimento de software moderno. 
 Nota-se que os métodos sugeridos, se aplicados de maneira correta, organizam o código, facilita o trabalho em equipe, e entre outros benefícios. Isso não quer dizer que o Clean Architecture é uma "bala de prata" para desenvolver softwares. Ressalto aqui que sua aplicação deve ser avaliada de acordo com o tipo de projeto e suas particularidades.
 
