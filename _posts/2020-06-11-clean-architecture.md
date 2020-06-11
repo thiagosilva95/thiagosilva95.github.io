@@ -9,49 +9,49 @@ summary: Vamos falar um pouco sobre essa "nova" forma de estruturar seus projeto
 
 # Clean Architecture: o que é, vantagens e como utilizar em aplicações na prática
 
-Ultimamente vemos ouvindo falar bastante sobre termos como "Clean Architecture", "Hexagonal Architecture", "SOLID", "DRY", "DDD", etc. Todos eles são princípios, práticas ou abordagens no mundo de desenvolvimento de software que, em essência, convergem para o objetivo de tornar o software mais robusto, escalável e flexível, deixando-o tolerante a mudanças, facilitando a implementação de novos requisitos para a evolução e manutenção do sistema.
+Ultimamente estamos ouvindo falar bastante sobre termos como "Clean Architecture", "Hexagonal Architecture", "SOLID", "DRY", "DDD", etc. Todos eles são princípios, práticas ou abordagens no mundo de desenvolvimento de software que, em essência, convergem para o objetivo de tornar o software mais robusto, escalável e flexível, deixando-o tolerante a mudanças, facilitando a implementação de novos requisitos para a evolução e manutenção do sistema.
 
-Quando se fala em Clean archi temos:
+Quando se fala em **Clean Architecture** temos algumas características como:
 
 - Arquitetura FOCADA nas regras de negócio: suas regras não devem conhecer o "mundo lá fora" (Frameworks, Ferramentas, Tecnologias, etc).
 - Inversão de dependências: Por exemplo, seu banco de dados deve depender das suas regras, e não suas regras do seu banco. Sua UI? Mesma coisa!
 - A melhor decisão é a que você pode tomar depois?: Isso não é preguiça, é arquitetura incremental. 
 - Regras de negócio devem ser 100% TESTÁVEIS e INDEPENDENTES!
 
-## Princípios da arquitetura limpa
+o diagrama que utilizei na parte superior deste post, segundo Uncle Bob,  é uma tentativa de integrar todos esses conceitos e boas práticas arquiteturas em uma única idéia.
 
-### A Regra de Dependência: Software Dependente ?
-
-A Regra de Dependência de acordo com a Figura 1, nos mostra que a seta apenas segue para dentro, ou seja, a camada mais externa visualiza e utiliza a mais interna. O contrário em nenhuma hipótese pode acontecer. Isso deixa o software dependente? Restritivo? Muito pelo contrário, a aplicação e utilização da Dependency Rule, diminui as limitações do código o tornando organizado e acessível. Não ultrapassar essas barreiras é essencial para otimizar o funcionamento do sistema.
+Um sistema bem estruturado possui baixo acoplamento e alta coesão, portanto, uma das soluções encontradas é a divisão do sistema em camadas, conforme imagem abaixo:
 
 
-### Entidades (Nível mais interno)
+É aí que entra a **Regra de Dependência** que, acordo com a figura, nos mostra que a seta apenas segue para dentro, ou seja, a camada mais externa visualiza e utiliza a mais interna. O inverso nao pode acontecer. Isso não faz com que o software fique dependente ou restritivo, muito pelo contrário, a aplicação dessa regra diminui as limitações do código o tornando organizado e acessível. Não ultrapassar essas barreiras é essencial para otimizar o funcionamento do sistema.
+
+### Entities
 
 Na camada de entidades, deve ser alocada a lógica de negócio e as regras de alto nível. Essa camada pode ser usada por todas as outras, tendo em vista que possui regras mais gerais do software, ou seja, as entidades são usadas pelas classes mais externas.
 
-### Casos de Uso
+### Use Cases
 
-Neste nível do software, cabe a aplicação das regras de negócio para cada caso. Estas são mais específicas e dizem respeito a validações por exemplo. Como citado por Uncle(2012), esta camada direciona as entidades para utilizar as regras de negócio corporativa para atingir as metas de uso.
+Neste nível do software, cabe a aplicação das regras de negócio para cada caso. Estas são mais específicas e dizem respeito a validações por exemplo. 
 
-### Adaptadores de Interface
+### Interface Adapters
 
 Esta camada tem uma função bem específica como todas as outras. Função esta que é converter as informações vindas das camadas internas (entidades+casos de uso) para o reconhecimento dos elementos pertencentes no próximo nível.
 
-### Camadas de estruturas e drivers
+### Frameworks and Drivers
 
 Composta pelos elementos mais externos: Frameworks, Banco de dados, bibliotecas e derivações.
 
 ## Aplicação prática
 
-API rota de cadastro
+Para ilustrar como podemos aplicar o conceito de Clean Architecture na prática, trago aqui uma situação onde temos um projeto de API de cadastro utilizando a liguangem NodeJs e algumas biliotecas como o *Express*, *MongoDB*, *BCrypt* para criptografia de senha e *Validator* para validar o e-mail recebido
 
-Utiliza o Express, MongoDB, BCrypt e Validator para validar o e-mail recebido
+Sei que esse exemplo é de baixa complexidade, mas acredito que é suficiente para entender a abordagem proposta nesse post.
 
-Geralmente como as pessoas fazem.
+A imagem abaixo talvez represente a forma como geralmente estruturamos esse tipo de projeto quando não se conhece a abordagem arquitetural que estamos discutindo aqui.
 
 ![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
 
-Nesse cenário temos componentes como Controller e Router aclopados a biblioteca de terceiros, além de termos componente que tem muitas "responsabilidades". Se precisar em algum momento trocar o Express por outro framework, será necessário alterar todos os controllers
+Nesse cenário temos componentes como controller e router aclopados a biblioteca de terceiros, além de termos componente que tem muitas "responsabilidades". Se precisar em algum momento trocar o Express por outro framework, será necessário alterar todos os controllers
 
 Então para dar início a uma transformação na arquitetura do nosso sistema podemos iniciar focando em desacoplar nossos controllers do Express. Esse tipo de decisão em um cenário ideal, deveria ser uma tarefa muito fácil. Mas aqui temos que essa biblioteca praticamente toma conta do sistema.
 
