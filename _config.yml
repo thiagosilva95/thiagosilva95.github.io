@@ -2,7 +2,7 @@
 title: Thiago Henrique # your site title
 author: Thiago Henrique # You :P
 description: > # Meta description of Homepage
-  Compartilhando meus conhecimentos sobre Engenharia de Software
+  Compartilhando meus conhecimentos sobre desenvolvimento de software
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://thiagosilva95.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 
