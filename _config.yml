@@ -21,7 +21,7 @@ navigation: # Navigation links
   - {name: 'Contact', link: '/contact'}
 
 tagline: >
-  Compartilhando meus conhecimentos sobre Desenvolvimento de Software e Data Science
+  Compartilhando meus conhecimentos sobre Engenharia de Software
 
 hero_img: posts/inovacao2.jpg # Main background image: use the path from /assets/img/ => This will output /assets/img/posts/sleek_lg.jpg
 
