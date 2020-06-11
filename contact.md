@@ -4,7 +4,7 @@ title: Contact
 permalink: /contact/
 ---
 
-Feel free to use the form below to drop me an e-mail. It may take a little while, but I'll be happy to respond. 
+Sinta-se livre para usar o formulário abaixo para me enviar um e-mail. Pode demorar um pouco, mas ficarei feliz em responder. 
 
 {% include form.html %}
 
