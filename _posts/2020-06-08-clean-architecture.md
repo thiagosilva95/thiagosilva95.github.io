@@ -75,12 +75,12 @@ Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
 
 Seguindo em frente, precisamos agora desacoplar biblioteca para validar e-mail para que nosso presentation layer não dependa de um componente externo. Criamos um `EmailValidatorAdapter` semelhante ao adapter criado anteriormente.
 Assim, em vez de o `SignUpController` depender diretamente desse adapter, definimos ainda na camada de apresentação, uma nova interface `EmailValidator` que diz o que esse componente deve fazer e "alguém" de fora implementa a interface definida. Dessa forma desaclopamos e se outros controladores precisarem usar esse validator poderemos facilmente reutilizar o componente. Além do benefício de, se um dia optarmos por substituir essa biblioteca por uma regex por exemplo, alteraremos apenas um componente.
-Podemos dizer que é nossa camada Utils que é mais generica irá conter coisas que podem ser utilizadas em qualquer lugar.
+Podemos dizer que é nossa camada **Utils** que é mais generica irá conter coisas que podem ser utilizadas em qualquer lugar.
 
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
 Surge, então, a necessidade de uma camada de negócio que diga o que precisamos fazer. Pois para realizar um cadastro, precisamos salvar os dados no banco de dados, mas antes disso, queremos criptografar a senha do usuário.
-Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada *Domain*. Não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
+Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
 Sigupcontroller precisa de alguem que implemente essa interface para criar uma conta. Não importa se a implementação será com banco de dados ou cache, ou dados mockados portanto que respeite a interface.
 
 Então teremos o data layer que será onde teremos a implementação da regra de negocio. Temos o componente dbaddacccount que será nossa implementação voltada para banco de dados.
