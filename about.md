@@ -8,7 +8,7 @@ permalink: /about/
 
 ![profile]({{ "assets/img/thiagosilva-profile-50p.jpg" | absolute_url }})
  
-Olá! Meu nome é **Thiago Henrique Nascimento da Silva**, sou um Software Developer brasileiro.
+Olá! Meu nome é **Thiago Henrique**.
 
 Eu me considero como full-stack web developer. Ao longo da minha carreira, tive a chance de trabalhar em projetos desafiadores, tanto no front-end quanto no back-end e isso me deu confiança em todo o processo de desenvolvimento da web. No momento, estou focando nos estudos e procurando atuar com Arquitetura de Software, Cloud Computing e tecnologias back-end.
 
