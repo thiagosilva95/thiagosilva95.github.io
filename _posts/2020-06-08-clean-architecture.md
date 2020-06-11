@@ -80,27 +80,26 @@ Podemos dizer que é nossa camada **Utils** que é mais generica irá conter coi
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
 Surge, então, a necessidade de uma camada de negócio que diga o que precisamos fazer. Pois para realizar um cadastro, precisamos salvar os dados no banco de dados, mas antes disso, queremos criptografar a senha do usuário.
-Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
-Sigupcontroller precisa de alguem que implemente essa interface para criar uma conta. Não importa se a implementação será com banco de dados ou cache, ou dados mockados portanto que respeite a interface.
+Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Essa camada não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
+Com isso, o `SignUpController` irá precisar de alguém que implemente essa interface para criar uma conta de usuário. Não importa se a implementação será com banco de dados, cache, ou dados mockados, o que importa é que a implementação respeite a interface definida.
 
-Então teremos o data layer que será onde teremos a implementação da regra de negocio. Temos o componente dbaddacccount que será nossa implementação voltada para banco de dados.
-Esse sim utiliza o Bcrypt para fazer a criptografia. Mas não queremos acopla-los diretamente. Assim como antes, criamos um adapter para isolár os componentes.
-Dentro da infra layer, camada de infra, terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependencia. Criamos a interface Encrypter. O dbaddacccount precisa de alguém que saiba fazer criptografia e não como fazer.
-Dependencia inverteu novamente. o infra que aponta para o data layer e não o data layer apontando para o infra.
-
+Assumindo que queremos a implementação da regra de negocio voltada para armazenamento em banco de dados, criaremos a **Data** layer que terá o componente `DbAddAcccount`.
+Esse sim irá utilizar o BCrypt para fazer a criptografia da senha do usuário. Mas não queremos acopla-los diretamente. Assim como antes, criaremos um adapter para isolar os componentes.
+Ele ficará dentro da **Infra** layer, camada que terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependencia, criamos a interface `Encrypter` ainda na Data layer já que o `DbAddAcccount` precisa de alguém que saiba fazer criptografia e não ele mesmo saber como faz.
+Com isso a dependência inverteu novamente. O Infra layer que aponta para o Data layer e não o Data layer apontando para o Infra.
 
 ![]({{ "assets/img/clean_architecture/07.png" | absolute_url }})
 
-Para finalizar temos o mongodb. AddUserMongoRepository que sabe usar o mongo. Criamos a interface AddUserRepo,mais alguem que precisa de alguem que saiba inserir no banco de dados, não importa qual
-inversão de dependencia feita mais uma vez.
+Para finalizar temos o a dependência com o MongoDb. Criaremos o componente`AddUserMongoRepository` que sabe usar o mongo e criaremos também a interface `AddUserRepo` pois outros componentes podem precisar de "alguém" que saiba inserir no banco de dados, não importa qual.
+Inversão de dependencia feita mais uma vez.
 
-Com isso as bibliotecas de  terceiros estão cada vez mais isolados, mais fora, na camada mais "fora" da nossa arquitetura. Trocar mongo db meche em apenas um componente
+Com isso as bibliotecas de  terceiros estão cada vez mais isoladas, cada vez mais na camada mais "fora" da nossa arquitetura. Se futuramente quisermos trocar MongoDB, vamos alterar apenas um componente.
 
 ![]({{ "assets/img/clean_architecture/08.png" | absolute_url }})
 
-Com isso, utilização do padrão adapter.  para conseguir desacoplar nossas camadas precisamos acoplar uma delas que será Main layer. Será responsável por criar instancias de todos os objetos.
-Exemplo: Para criar a rota de signup precisamos do controlador, que por sua vez precisa de alguem que implemente o AddAccout que não será instanciada no controller.
-Alguem cria a instancia e injeta no controller. O main fará a composição desses objetos, outro design pattern Composite. Toda composição feita em um lugar só.
+Realizamos até aqui transformações, com a ajuda do padrão de projeto *Adapter*, que removem o acoplamento entre as camadas. Mas para conseguir ter uma solução completa e desacoplar nossas camadas precisamos acoplar uma delas, e esta será a **Main** layer. Ela será responsável por criar instancias de todos os objetos.
+Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguem que implemente a interface `AddAccout`. Mas que sua implementação não será instanciada no controller.
+Alguém irá criar essa instancia e injetará no controller. O Main layer fará a composição desses objetos através de outro design pattern, o *Composite*, e toda composição será feita em um lugar só.
 
 Abaixo o desenho final desse exemplo. 
 Destacando com cores para melhor vizualização. Dependencias sempre nas "pontas". Facilmente podemos trocar sem afetar o resto do sistema.
@@ -112,7 +111,9 @@ As ideias propostas na obra de Uncle Bob, padronizam o desenvolvimento de softwa
 
 ## Referências
 
-Disponível em: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+Artigo do [Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) sobre Clean Architecture.
+
+Curso NodeJs, Typescript, TDD, Clean Architecture e SOLID na [Udemy](https://www.udemy.com/course/tdd-com-mango/) do Rodrigo Manguinho.
 
 Atensiosamente, 
 Thiago
