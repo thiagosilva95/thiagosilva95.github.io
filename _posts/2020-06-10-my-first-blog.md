@@ -6,8 +6,6 @@ mathjax: true
 summary: Entrando no mundo da produção de conteúdo!
 ---
 
-# Entrando no mundo da produção de conteúdo!
-
 
 Hoje dou início a essa página com o intuito de compartilhar conhecimento ao longo dos meus estudos na área de desenvolvimento de software e servir como portifólio de experiências.
 
