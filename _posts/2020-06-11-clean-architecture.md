@@ -18,7 +18,7 @@ Quando se fala em **Clean Architecture** temos algumas características como:
 - A melhor decisão é a que você pode tomar depois?: Isso não é preguiça, é arquitetura incremental. 
 - Regras de negócio devem ser 100% TESTÁVEIS e INDEPENDENTES!
 
-o diagrama que utilizei na parte superior deste post, segundo Uncle Bob,  é uma tentativa de integrar todos esses conceitos e boas práticas arquiteturas em uma única idéia.
+O diagrama que utilizei na parte superior deste post, segundo Uncle Bob,  é uma tentativa de integrar todos esses conceitos e boas práticas arquiteturas em uma única idéia.
 
 Um sistema bem estruturado possui baixo acoplamento e alta coesão, portanto, uma das soluções encontradas é a divisão do sistema em camadas, conforme imagem abaixo:
 
@@ -79,6 +79,8 @@ Surge, então, a necessidade de uma camada de negócio que diga o que precisamos
 Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Essa camada não terá implementação, apenas protocolos que dizem o que nossa regra de negócio deve fazer.
 Com isso, o `SignUpController` irá precisar de alguém que implemente essa interface para criar uma conta de usuário. Não importa se a implementação será com banco de dados, cache, ou dados mockados, o que importa é que a implementação respeite a interface definida.
 
+![]({{ "assets/img/clean_architecture/09.png" | absolute_url }})
+
 Assumindo que queremos a implementação da regra de negócio voltada para armazenamento em banco de dados, criaremos a **Data** layer que terá o componente `DbAddAcccount`.
 Esse sim irá utilizar o BCrypt para fazer a criptografia da senha do usuário. Mas não queremos acopla-los diretamente. Assim como antes, criaremos um adapter para isolar os componentes.
 Ele ficará dentro da **Infra** layer, camada que terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependência, criamos a interface `Encrypter` ainda na Data layer já que o `DbAddAcccount` precisa de alguém que saiba fazer criptografia e não ele mesmo saber como faz.
@@ -93,17 +95,18 @@ Com isso as bibliotecas de  terceiros estão cada vez mais isoladas, cada vez ma
 
 ![]({{ "assets/img/clean_architecture/08.png" | absolute_url }})
 
-Realizamos até aqui transformações, com a ajuda do padrão de projeto *Adapter*, que removem o acoplamento entre as camadas. Mas para conseguir ter uma solução completa e desacoplar nossas camadas precisamos acoplar uma delas, e esta será a **Main** layer. Ela será responsável por criar instancias de todos os objetos.
-Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguém que implemente a interface `AddAccount`. Mas que sua implementação não será instanciada no controller.
+Realizamos até aqui transformações, com a ajuda do padrão de projeto *Adapter*, que removem o acoplamento entre as camadas. Mas para conseguir ter uma solução completa e desacoplar nossas camadas precisamos acoplar uma delas, e esta será a **Main** layer. 
+
+Ela será responsável por criar instancias de todos os objetos. Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguém que implemente a interface `AddAccount`. Mas que sua implementação não será instanciada no controller.
 Alguém irá criar essa instancia e injetará no controller. O Main layer fará a composição desses objetos através de outro design pattern, o *Composite*, e toda composição será feita em um lugar só.
 
-Abaixo o desenho final desse exemplo. 
-Destacando com cores para melhor visualização. Dependências sempre nas "pontas". Facilmente podemos trocar sem afetar o resto do sistema.
+Abaixo está o desenho final desse exemplo, destacando com cores para melhor visualização das camadas. Acredito que tenhamos chegado bem próximo de um desenho arquitetural bem estruturado com baixo acoplamento e alta coesão. Observa-se que as ependências externas estão sempre nas "pontas" e facilmente podemos troca-las sem afetar o resto do sistema. 
 
 ![]({{ "assets/img/clean_architecture/final.png" | absolute_url }})
 
 ### Considerações Finais
-As ideias propostas na obra de Uncle Bob, padronizam o desenvolvimento de software moderno. Observa-se que os métodos sugeridos, se aplicados de maneira correta, organizam o código, facilita o trabalho em equipe, e entre diversos argumentos citados durante esta pesquisa. A implementação do mesmo, não é algo difícil e livrará o desenvolvedor de vários problemas que por ventura pudessem ocorrer durante o projeto de software.
+As ideias propostas por Uncle Bob, padronizam o desenvolvimento de software moderno. 
+Nota-se que os métodos sugeridos, se aplicados de maneira correta, organizam o código, facilita o trabalho em equipe, e entre outros benefícios. Isso não quer dizer que o Clean Architecture é uma "bala de prata" para desenvolver software. Ressalto aqui que sua aplicação deve ser avaliada de acordo com o tipo de projeto e suas particularidades.
 
 ## Referências
 
