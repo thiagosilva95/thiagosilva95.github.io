@@ -43,10 +43,6 @@ Composta pelos elementos mais externos: Frameworks, Banco de dados, bibliotecas 
 
 ## Aplicação prática
 
-As I wanted to use a very expressive model (`xgboost`) and tune the hell out of it (with the TPE algorithm from `hyperopt`), I needed to devise a robust validation process. One of Kaggle greatest competitors, [Lucas Eustaquio](https://www.kaggle.com/leustagos) (who, unfortunately, lost the battle against cancer during the competition), mentioned at an interview that validation is one of the things [he cared the most about](http://blog.kaggle.com/2016/02/22/profiling-top-kagglers-leustagos-current-7-highest-1/), being the first thing that he builds at the start of a competition.
-
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
-
 API rota de cadastro
 
 Utiliza o Express, MongoDB, BCrypt e Validator para validar o e-mail recebido
@@ -57,52 +53,52 @@ Geralmente como as pessoas fazem.
 
 Nesse cenário temos componentes como Controller e Router aclopados a biblioteca de terceiros, além de termos componente que tem muitas "responsabilidades". Se precisar em algum momento trocar o Express por outro framework, será necessário alterar todos os controllers
 
-Então para dar incício a uma transformação na arquitetura do nosso sistema podemos iniciar focando em desacoplar nossos controllers do Express. Esse tipo de decisão em um cenário ideal, deveria ser uma tarefa muito fácil. Mas aqui temos que essa biblioteca práticamente toma conta do sistema.
+Então para dar início a uma transformação na arquitetura do nosso sistema podemos iniciar focando em desacoplar nossos controllers do Express. Esse tipo de decisão em um cenário ideal, deveria ser uma tarefa muito fácil. Mas aqui temos que essa biblioteca praticamente toma conta do sistema.
 
 Hoje o `SignUpController` aponta para o Express por isso precisamos usar o padrão de inversão de dependência (dependency inversion) para fazer com que o Express olhe para nossos controllers.
 
 ![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
 
-Para isso, podemos criar um adapter entre os dois que terá a tarefa de converter as interfaces do controller para a realidade do Express. Uma das particularidades do express é que ele espera receber o (req, res) como parametros nas rotas definidas. 
+Para isso, podemos criar um adapter entre os dois que terá a tarefa de converter as interfaces do controller para a realidade do Express. Uma das particularidades do Express é que ele espera receber o (req, res) como parâmetros nas rotas definidas. 
 
 ![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
 
 Também não podemos permitir que o adapter dependa diretamente do `SignUpController`. Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma interface `Controller`, que irá servir como um limite da camada de apresentação para fazer a inversão de dependência
-O adapter precisa de qualquer classe que utilize a interface
-Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
+O adapter precisa de qualquer classe que utilize a interface.
+Com isso a dependência inverteu. Se eu precisar trocar, só altero o adapter
 
 ![]({{ "assets/img/clean_architecture/05.png" | absolute_url }})
 
 Seguindo em frente, precisamos agora desacoplar biblioteca para validar e-mail para que nosso presentation layer não dependa de um componente externo. Criamos um `EmailValidatorAdapter` semelhante ao adapter criado anteriormente.
-Assim, em vez de o `SignUpController` depender diretamente desse adapter, definimos ainda na camada de apresentação, uma nova interface `EmailValidator` que diz o que esse componente deve fazer e "alguém" de fora implementa a interface definida. Dessa forma desaclopamos e se outros controladores precisarem usar esse validator poderemos facilmente reutilizar o componente. Além do benefício de, se um dia optarmos por substituir essa biblioteca por uma regex por exemplo, alteraremos apenas um componente.
-Podemos dizer que é nossa camada **Utils** que é mais generica irá conter coisas que podem ser utilizadas em qualquer lugar.
+Assim, em vez de o `SignUpController` depender diretamente desse adapter, definimos ainda na camada de apresentação, uma nova interface `EmailValidator` que diz o que esse componente deve fazer e "alguém" de fora implementa a interface definida. Dessa forma desacoplamos e se outros controladores precisarem usar esse validator poderemos facilmente reutilizar o componente. Além do benefício de, se um dia optarmos por substituir essa biblioteca por uma regex por exemplo, alteraremos apenas um componente.
+Podemos dizer que é nossa camada **Utils** que é mais genérica irá conter coisas que podem ser utilizadas em qualquer lugar.
 
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
 Surge, então, a necessidade de uma camada de negócio que diga o que precisamos fazer. Pois para realizar um cadastro, precisamos salvar os dados no banco de dados, mas antes disso, queremos criptografar a senha do usuário.
-Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Essa camada não terá implementação, apenas protocolos que dizem o que nossa regra de negocio deve fazer.
+Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Essa camada não terá implementação, apenas protocolos que dizem o que nossa regra de negócio deve fazer.
 Com isso, o `SignUpController` irá precisar de alguém que implemente essa interface para criar uma conta de usuário. Não importa se a implementação será com banco de dados, cache, ou dados mockados, o que importa é que a implementação respeite a interface definida.
 
-Assumindo que queremos a implementação da regra de negocio voltada para armazenamento em banco de dados, criaremos a **Data** layer que terá o componente `DbAddAcccount`.
+Assumindo que queremos a implementação da regra de negócio voltada para armazenamento em banco de dados, criaremos a **Data** layer que terá o componente `DbAddAcccount`.
 Esse sim irá utilizar o BCrypt para fazer a criptografia da senha do usuário. Mas não queremos acopla-los diretamente. Assim como antes, criaremos um adapter para isolar os componentes.
-Ele ficará dentro da **Infra** layer, camada que terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependencia, criamos a interface `Encrypter` ainda na Data layer já que o `DbAddAcccount` precisa de alguém que saiba fazer criptografia e não ele mesmo saber como faz.
+Ele ficará dentro da **Infra** layer, camada que terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependência, criamos a interface `Encrypter` ainda na Data layer já que o `DbAddAcccount` precisa de alguém que saiba fazer criptografia e não ele mesmo saber como faz.
 Com isso a dependência inverteu novamente. O Infra layer que aponta para o Data layer e não o Data layer apontando para o Infra.
 
 ![]({{ "assets/img/clean_architecture/07.png" | absolute_url }})
 
-Para finalizar temos o a dependência com o MongoDb. Criaremos o componente`AddUserMongoRepository` que sabe usar o mongo e criaremos também a interface `AddUserRepo` pois outros componentes podem precisar de "alguém" que saiba inserir no banco de dados, não importa qual.
-Inversão de dependencia feita mais uma vez.
+Para finalizar temos o a dependência com o MongoDb. Criaremos o componente `AddAccountMongoRepository` que sabe usar o mongo e criaremos também a interface `AddUserRepo` pois outros componentes podem precisar de "alguém" que saiba inserir no banco de dados, não importa qual.
+Inversão de dependência feita mais uma vez.
 
 Com isso as bibliotecas de  terceiros estão cada vez mais isoladas, cada vez mais na camada mais "fora" da nossa arquitetura. Se futuramente quisermos trocar MongoDB, vamos alterar apenas um componente.
 
 ![]({{ "assets/img/clean_architecture/08.png" | absolute_url }})
 
 Realizamos até aqui transformações, com a ajuda do padrão de projeto *Adapter*, que removem o acoplamento entre as camadas. Mas para conseguir ter uma solução completa e desacoplar nossas camadas precisamos acoplar uma delas, e esta será a **Main** layer. Ela será responsável por criar instancias de todos os objetos.
-Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguem que implemente a interface `AddAccout`. Mas que sua implementação não será instanciada no controller.
+Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguém que implemente a interface `AddAccount`. Mas que sua implementação não será instanciada no controller.
 Alguém irá criar essa instancia e injetará no controller. O Main layer fará a composição desses objetos através de outro design pattern, o *Composite*, e toda composição será feita em um lugar só.
 
 Abaixo o desenho final desse exemplo. 
-Destacando com cores para melhor vizualização. Dependencias sempre nas "pontas". Facilmente podemos trocar sem afetar o resto do sistema.
+Destacando com cores para melhor visualização. Dependências sempre nas "pontas". Facilmente podemos trocar sem afetar o resto do sistema.
 
 ![]({{ "assets/img/clean_architecture/final.png" | absolute_url }})
 
