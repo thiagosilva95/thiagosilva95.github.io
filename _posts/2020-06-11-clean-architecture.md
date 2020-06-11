@@ -15,15 +15,15 @@ Quando se fala em **Clean Architecture** temos algumas características como:
 
 - Arquitetura FOCADA nas regras de negócio: suas regras não devem conhecer o "mundo lá fora" (Frameworks, Ferramentas, Tecnologias, etc).
 - Inversão de dependências: Por exemplo, seu banco de dados deve depender das suas regras, e não suas regras do seu banco. Sua UI? Mesma coisa!
-- A melhor decisão é a que você pode tomar depois?: Isso não é preguiça, é arquitetura incremental. 
+- A melhor decisão é a que você pode tomar depois? Isso não é preguiça, é arquitetura incremental. 
 - Regras de negócio devem ser 100% TESTÁVEIS e INDEPENDENTES!
 
-O diagrama que utilizei na parte superior deste post, segundo Uncle Bob,  é uma tentativa de integrar todos esses conceitos e boas práticas arquiteturas em uma única idéia.
+O diagrama que utilizei na parte superior deste post, segundo Uncle Bob, é uma tentativa de integrar todos esses conceitos e boas práticas arquiteturas em uma única ideia.
 
 Um sistema bem estruturado possui baixo acoplamento e alta coesão, portanto, uma das soluções encontradas é a divisão do sistema em camadas, conforme imagem abaixo:
 
 
-É aí que entra a **Regra de Dependência** que, acordo com a figura, nos mostra que a seta apenas segue para dentro, ou seja, a camada mais externa visualiza e utiliza a mais interna. O inverso nao pode acontecer. Isso não faz com que o software fique dependente ou restritivo, muito pelo contrário, a aplicação dessa regra diminui as limitações do código o tornando organizado e acessível. Não ultrapassar essas barreiras é essencial para otimizar o funcionamento do sistema.
+É aí que entra a **Regra de Dependência** que, acordo com a figura, nos mostra que a seta apenas segue para dentro, ou seja, a camada mais externa visualiza e utiliza a mais interna. O inverso não pode acontecer. Isso não faz com que o software fique dependente ou restritivo, muito pelo contrário, a aplicação dessa regra diminui as limitações do código o tornando organizado e acessível. Não ultrapassar essas barreiras é essencial para otimizar o funcionamento do sistema.
 
 ### Entities
 
@@ -43,7 +43,7 @@ Composta pelos elementos mais externos: Frameworks, Banco de dados, bibliotecas 
 
 ## Aplicação prática
 
-Para ilustrar como podemos aplicar o conceito de Clean Architecture na prática, trago aqui uma situação onde temos um projeto de API de cadastro utilizando a liguangem NodeJs e algumas biliotecas como o *Express*, *MongoDB*, *BCrypt* para criptografia de senha e *Validator* para validar o e-mail recebido
+Para ilustrar como podemos aplicar o conceito de Clean Architecture na prática, trago aqui uma situação onde temos um projeto de API de cadastro utilizando a liguangem NodeJs e algumas bibliotecas como o *Express*, *MongoDB*, *BCrypt* para criptografia de senha e *Validator* para validar o e-mail recebido.
 
 Sei que esse exemplo é de baixa complexidade, mas acredito que é suficiente para entender a abordagem proposta nesse post.
 
@@ -51,7 +51,7 @@ A imagem abaixo talvez represente a forma como geralmente estruturamos esse tipo
 
 ![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
 
-Nesse cenário temos componentes como controller e router aclopados a biblioteca de terceiros, além de termos componente que tem muitas "responsabilidades". Se precisar em algum momento trocar o Express por outro framework, será necessário alterar todos os controllers
+Nesse cenário temos componentes como controller e router acloplados a biblioteca de terceiros, além de termos componente que tem muitas "responsabilidades". Se precisar em algum momento trocar o Express por outro framework, será necessário alterar todos os controllers.
 
 Então para dar início a uma transformação na arquitetura do nosso sistema podemos iniciar focando em desacoplar nossos controllers do Express. Esse tipo de decisão em um cenário ideal, deveria ser uma tarefa muito fácil. Mas aqui temos que essa biblioteca praticamente toma conta do sistema.
 
@@ -65,7 +65,7 @@ Para isso, podemos criar um adapter entre os dois que terá a tarefa de converte
 
 Também não podemos permitir que o adapter dependa diretamente do `SignUpController`. Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma interface `Controller`, que irá servir como um limite da camada de apresentação para fazer a inversão de dependência
 O adapter precisa de qualquer classe que utilize a interface.
-Com isso a dependência inverteu. Se eu precisar trocar, só altero o adapter
+Com isso a dependência inverteu. Se eu precisar trocar, só altero o adapter.
 
 ![]({{ "assets/img/clean_architecture/05.png" | absolute_url }})
 
@@ -76,13 +76,13 @@ Podemos dizer que é nossa camada **Utils** que é mais genérica irá conter co
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
 Surge, então, a necessidade de uma camada de negócio que diga o que precisamos fazer. Pois para realizar um cadastro, precisamos salvar os dados no banco de dados, mas antes disso, queremos criptografar a senha do usuário.
-Criamos então uma inteface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Essa camada não terá implementação, apenas protocolos que dizem o que nossa regra de negócio deve fazer.
+Criamos então uma interface `AddAccount` que nada mais é que a representação de uma camada de negócio da aplicação Camada **Domain**. Essa camada não terá implementação, apenas protocolos que dizem o que nossa regra de negócio deve fazer.
 Com isso, o `SignUpController` irá precisar de alguém que implemente essa interface para criar uma conta de usuário. Não importa se a implementação será com banco de dados, cache, ou dados mockados, o que importa é que a implementação respeite a interface definida.
 
 ![]({{ "assets/img/clean_architecture/09.png" | absolute_url }})
 
 Assumindo que queremos a implementação da regra de negócio voltada para armazenamento em banco de dados, criaremos a **Data** layer que terá o componente `DbAddAcccount`.
-Esse sim irá utilizar o BCrypt para fazer a criptografia da senha do usuário. Mas não queremos acopla-los diretamente. Assim como antes, criaremos um adapter para isolar os componentes.
+Esse sim irá utilizar o BCrypt para fazer a criptografia da senha do usuário. Mas não queremos acoplá-los diretamente. Assim como antes, criaremos um adapter para isolar os componentes.
 Ele ficará dentro da **Infra** layer, camada que terá implementações de interface voltadas para frameworks. E agora para realizar a inversão de dependência, criamos a interface `Encrypter` ainda na Data layer já que o `DbAddAcccount` precisa de alguém que saiba fazer criptografia e não ele mesmo saber como faz.
 Com isso a dependência inverteu novamente. O Infra layer que aponta para o Data layer e não o Data layer apontando para o Infra.
 
@@ -97,16 +97,16 @@ Com isso as bibliotecas de  terceiros estão cada vez mais isoladas, cada vez ma
 
 Realizamos até aqui transformações, com a ajuda do padrão de projeto *Adapter*, que removem o acoplamento entre as camadas. Mas para conseguir ter uma solução completa e desacoplar nossas camadas precisamos acoplar uma delas, e esta será a **Main** layer. 
 
-Ela será responsável por criar instancias de todos os objetos. Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguém que implemente a interface `AddAccount`. Mas que sua implementação não será instanciada no controller.
-Alguém irá criar essa instancia e injetará no controller. O Main layer fará a composição desses objetos através de outro design pattern, o *Composite*, e toda composição será feita em um lugar só.
+Ela será responsável por criar instâncias de todos os objetos. Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguém que implemente a interface `AddAccount`. Mas que sua implementação não será instanciada no controller.
+"Alguém" irá criar essa instância e injetará no controller. O Main layer fará a composição desses objetos através de outro design pattern, o *Composite*, e toda composição será feita em um lugar só.
 
-Abaixo está o desenho final desse exemplo, destacando com cores para melhor visualização das camadas. Acredito que tenhamos chegado bem próximo de um desenho arquitetural bem estruturado com baixo acoplamento e alta coesão. Observa-se que as ependências externas estão sempre nas "pontas" e facilmente podemos troca-las sem afetar o resto do sistema. 
+Abaixo está o desenho final desse exemplo, destacando com cores para melhor visualização das camadas. Acredito que tenhamos chegado bem próximo de um desenho arquitetural bem estruturado com baixo acoplamento e alta coesão. Observa-se que as dependências externas estão sempre nas "pontas" e facilmente podemos troca-las sem afetar o resto do sistema. 
 
 ![]({{ "assets/img/clean_architecture/final.png" | absolute_url }})
 
 ### Considerações Finais
 As ideias propostas por Uncle Bob, padronizam o desenvolvimento de software moderno. 
-Nota-se que os métodos sugeridos, se aplicados de maneira correta, organizam o código, facilita o trabalho em equipe, e entre outros benefícios. Isso não quer dizer que o Clean Architecture é uma "bala de prata" para desenvolver software. Ressalto aqui que sua aplicação deve ser avaliada de acordo com o tipo de projeto e suas particularidades.
+Nota-se que os métodos sugeridos, se aplicados de maneira correta, organizam o código, facilita o trabalho em equipe, e entre outros benefícios. Isso não quer dizer que o Clean Architecture é uma "bala de prata" para desenvolver softwares. Ressalto aqui que sua aplicação deve ser avaliada de acordo com o tipo de projeto e suas particularidades.
 
 ## Referências
 
