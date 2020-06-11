@@ -53,34 +53,29 @@ Utiliza o Express, MongoDB, BCrypt e Validator para validar o e-mail recebido
 
 Geralmente como as pessoas fazem.
 
-![]({{ "assets/img/clean_architecture/001.png" | absolute_url }})
+![]({{ "assets/img/clean_architecture/01.png" | absolute_url }})
 
-Controller aclopado a biblioteca de terceiro. Componente que faz tudo no sistema. Se precisar em algum momento trocar o express por outro framework, será necessário alterar todos os controllers
+Nesse cenário temos componentes como Controller e Router aclopados a biblioteca de terceiros, além de termos componente que tem muitas "responsabilidades". Se precisar em algum momento trocar o Express por outro framework, será necessário alterar todos os controllers
 
-Começando com o desacoplamento do controle e express. Deveria ser uma tarefa muito fácil. Práticamente toma conta do sistema.
-Hoje o controller aponta para o express. Precisamos usar o padrão de inversão de dependências (dependency inversion) O Express deve estar olhando para o controller
+Então para dar incício a uma transformação na arquitetura do nosso sistema podemos iniciar focando em desacoplar nossos controllers do Express. Esse tipo de decisão em um cenário ideal, deveria ser uma tarefa muito fácil. Mas aqui temos que essa biblioteca práticamente toma conta do sistema.
 
-
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Hoje o `SignUpController` aponta para o Express por isso precisamos usar o padrão de inversão de dependência (dependency inversion) para fazer com que o Express olhe para nossos controllers.
 
 ![]({{ "assets/img/clean_architecture/03.png" | absolute_url }})
 
-Podemos criar um adapter entre os dois. O express esperar receber o (req, res) como parametros. Terá a tarefa de converter as interfaces do controller para a realidade do express.
-
-In order to get stable AUC measurements (0.003 of AUC would mean 1,350 positions in the LB) and achieve my goals, I used two CV strategies to evaluate my models:
+Para isso, podemos criar um adapter entre os dois que terá a tarefa de converter as interfaces do controller para a realidade do express. Uma das particularidades do express é que ele espera receber o (req, res) como parametros nas rotas definidas. 
 
 ![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
 
-Também não podemos permitir que o adapter dependa diretamente do (`SignUpController`). Pode adaptar qualquer controlador por isso criamos uma interface Controller, que irá servir como um limite da camada de apresentação para fazer a inversão de dependencia
+Também não podemos permitir que o adapter dependa diretamente do (`SignUpController`). Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma interface `Controller`, que irá servir como um limite da camada de apresentação para fazer a inversão de dependência
 O adapter precisa de qualquer classe que utilize a interface
 Com isso a dependencia inverteu. Se eu precisar trocar, só altero o adapter
 
 ![]({{ "assets/img/clean_architecture/05.png" | absolute_url }})
 
-Desacoplar biblioteca para validar e-mail e com isso nosso presentation layer depende de um componente externo. Criamos um emailvalidatorAdapter semelhante ao item anterior.
-Em vez de o signupcontroller depender diretamente desse adapter, definimos ainda na camada de apresentação uma nova interface emailvalidator que 
-diz qual o formato que quer e alguem de fora implementa a interface definida. Dessa forma desaclopamos. Se outros controladores precisarem usar esse validator poderemos reutilizar. Se um dia optarmos por substituir essa biblioteca por uma regex por exemplo, alteraremos apenas um componente.
-Podemos dizer que é nossa camada utils. mais generica. coisas que podem ser utilizadas em qualquer lugar.
+Seguindo em frente, precisamos agora desacoplar biblioteca para validar e-mail para que nosso presentation layer não dependa de um componente externo. Criamos um `EmailValidatorAdapter` semelhante ao adapter criado anteriormente.
+Assim, em vez de o `SignUpController` depender diretamente desse adapter, definimos ainda na camada de apresentação, uma nova interface `EmailValidator` que diz o que esse componente deve fazer e "alguém" de fora implementa a interface definida. Dessa forma desaclopamos e se outros controladores precisarem usar esse validator poderemos facilmente reutilizar o componente. Além do benefício de, se um dia optarmos por substituir essa biblioteca por uma regex por exemplo, alteraremos apenas um componente.
+Podemos dizer que é nossa camada Utils que é mais generica irá conter coisas que podem ser utilizadas em qualquer lugar.
 
 ![]({{ "assets/img/clean_architecture/06.png" | absolute_url }})
 
