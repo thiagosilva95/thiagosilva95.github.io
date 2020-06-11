@@ -63,7 +63,7 @@ Para isso, podemos criar um adapter entre os dois que terá a tarefa de converte
 
 ![]({{ "assets/img/clean_architecture/04.png" | absolute_url }})
 
-Também não podemos permitir que o adapter dependa diretamente do `SignUpController`. Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma interface `Controller`, que irá servir como um limite da camada de apresentação para fazer a inversão de dependência
+Também não podemos permitir que o adapter dependa diretamente do `SignUpController`. Devemos fazer com que ele possa adaptar qualquer controlador, assim, criamos uma camada **Presentation** e dentro dela uma interface `Controller`, que irá servir como um limite desta camada para fazer a inversão de dependência
 O adapter precisa de qualquer classe que utilize a interface.
 Com isso a dependência inverteu. Se eu precisar trocar, só altero o adapter.
 
