@@ -101,7 +101,7 @@ Realizamos até aqui transformações, com a ajuda do padrão de projeto *Adapte
 Ela será responsável por criar instâncias de todos os objetos. Exemplo: Para criar a rota de signup precisamos do `SignUpController`, que por sua vez precisa de alguém que implemente a interface `AddAccount`. Mas que sua implementação não será instanciada no controller.
 "Alguém" irá criar essa instância e injetará no controller. O Main layer fará a composição desses objetos através de outro design pattern, o *Composite*, e toda composição será feita em um lugar só.
 
-![]({{ "assets/img/clean_architecture/10.png" | absolute_url }})
+![]({{ "assets/img/clean_architecture/11.png" | absolute_url }})
 
 Abaixo está o desenho final desse exemplo, destacando com cores para melhor visualização das camadas. Acredito que tenhamos chegado bem próximo de um desenho arquitetural bem estruturado com baixo acoplamento e alta coesão. Observa-se que as dependências externas estão sempre nas "pontas" e facilmente podemos troca-las sem afetar o resto do sistema. 
 
