@@ -117,6 +117,4 @@ Artigo do [Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean
 
 Curso NodeJs, Typescript, TDD, Clean Architecture e SOLID na [Udemy](https://www.udemy.com/course/tdd-com-mango/) do Rodrigo Manguinho.
 
-Atensiosamente, 
-Thiago
 
