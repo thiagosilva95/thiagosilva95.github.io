@@ -2,7 +2,7 @@
 layout: post
 title: Clean Architecture
 featured-img: clean_architecture
-category: [architecture]
+category: [architecture, best practices, development]
 mathjax: true
 summary: Vamos falar um pouco sobre essa "nova" forma de estruturar seus projetos, suas vantagens e desvantagens, e um exemplo prático de sua utilização 
 ---
